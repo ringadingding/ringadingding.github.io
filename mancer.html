@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ghhggkg</title>
+    <title>AYYY JS Version</title>
 </head>
 
 <body>
-    <input type="text" value="mcr-XXXXXXXXXX" id="apiKeyInput">
+    <input type="text" value="mcr-0QYq1GFTZKb65idO6O" id="apiKeyInput">
     <select id="modelSelect"></select><br>
     <button onclick="run()">Generate</button><br>
     <textarea id="outputTextarea" rows="10" cols="50"></textarea>
@@ -21,6 +21,7 @@
         <label>truncation_length:</label> <input type="text" id="truncation_length" value="2048"><br>
         <label>ban_eos_token:</label> <input type="text" id="ban_eos_token" value="false">
     </form>
+    <div id="errors"></div>
     <script>
         document.addEventListener("DOMContentLoaded", ()=>{
             fetch("https://mancer.tech/internal/api/models").then(res=>res.json()).then(data=>{
@@ -77,7 +78,7 @@
 
 
             const request = {
-                'prompt': prompt,
+                'prompt': prompt.trim(),
                 'max_new_tokens': maxnew,
                 
                 'preset': 'None',
@@ -91,6 +92,8 @@
             };
 
             try {
+                document.getElementById('errors').innerHTML = "⏳ Fetching...";
+
                 const response = await fetch(URI, {
                     method: 'POST',
                     headers: {
@@ -104,12 +107,13 @@
                     const data = await response.json();
                     const result = data.results[0].text;
                     document.getElementById('outputTextarea').value = prompt + result;
+                    document.getElementById('errors').innerHTML = "✅ Done.";
                 } else {
-                    document.getElementById('outputTextarea').value = "Error occurred!";
+                    document.getElementById('errors').innerHTML = "⚠️ Error occurred: fetch response code " + response.status;
                 }
             } catch (err) {
                 console.error(err);
-                document.getElementById('outputTextarea').value = "Error occurred!";
+                document.getElementById('errors').innerHTML = "⚠️ Error occurred: " + err;
             }
         }
     </script>
