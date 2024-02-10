@@ -108,7 +108,7 @@ cloudflared tunnel --url http://localhost:8080
 which generates a cloudflare URL to my server. IMPORTANT: Every time you run this command it's a different URL and you have to update the GPT's action schema with the new URL.
 
 cloudflared is available publicly here, you don't need any sort of account or anything: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
-If you're on Windows and you have winget then you can quickly install it with: winget install --id Cloudflare.cloudflare
+If you're on Windows and you have winget then you can quickly install it with: winget install --id Cloudflare.cloudflared
 
 Anyway, once you've got it up and running you should be able to see your gimme.json file at https://the-random-cloudflare-url.trycloudflare.com/gimme.json
 And when edit your local gimme.json file to a different prompt or size, the change should be immediately reflected at the URL as well. Once you've verified it's working, and your GPT's schema action contains the correct cloudflare URL, your GPT should be ready to use. I just type getGimmeData and click "allow all" requests on the prompt that comes up and it goes to work.
