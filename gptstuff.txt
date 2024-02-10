@@ -91,17 +91,21 @@ A URL to a text file that contains your 'privacy policy' -- only required if you
 
 --- NOTES ---
 
-The way I have my little server set up is a folder containing two files, gimme.json and privacy.txt
+I set it up this way because I wanted to be able to easily update the initial prompt (the one contained in gimme.json) without having to constantly upload files to the Knowledge section of my custom GPT or constantly deploy to github pages. So serving the files from my desktop made sense. I wrote a python script (well, I asked ChatGPT to write one for me) to serve the most recently modified .json file in a directory so that I could keep track of previous tries. And serving it over the cloudflare tunnel has worked well for me.
 
-gimme.json contains the following (size can be "1024x1024" for square, "1792x1024" for wide, "1024x1792" for tall):
+Here is how you can set it up to load the prompt from your computer with a simple http server. If you don't wanna do the python and cloudflare thing that I describe below, you could just upload your .json file to some website and point the GPT at that instead (I haven't tried it, but maybe a public pastebin url could work for this?). It's just up to whatever you find convenient.
+
+In a new folder create a file named gimme.json that contains the following (size can be "1024x1024" for square, "1792x1024" for wide, "1024x1792" for tall):
 {"prompt":"Hillary Diane Rodham Clinton in a 1990s advertisement for the Super Nintendo Entertainment System", "size":"1024x1024"}
 
-privacy.txt's contents can be whatever, just nonsense, it doesn't matter. If you aren't sharing your GPT then you don't have to even bother with it.
+You can also create a file named privacy.txt but it's not necessary. Its contents do not matter. If you aren't sharing your GPT then you don't have to even bother with it.
 
-In the same folder I run: python -m http.server 8080
+Assuming you've got python installed, you can run a simple http server inside this folder with: python -m http.server 8080
 
-While that is running, I run: cloudflared tunnel --url http://localhost:8080
-which is what generates the cloudflare URL for you. Every time you run this command it's a different URL and you have to update the GPT's action schema with the new URL.
+After you have made sure you can see your files at http://localhost:8080 you will want to expose them to the Internet.
+I do this with: 
+cloudflared tunnel --url http://localhost:8080
+which generates a cloudflare URL to my server. IMPORTANT: Every time you run this command it's a different URL and you have to update the GPT's action schema with the new URL.
 
 cloudflared is available publicly here, you don't need any sort of account or anything: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
 If you're on Windows and you have winget then you can quickly install it with: winget install --id Cloudflare.cloudflare
