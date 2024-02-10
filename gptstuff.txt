@@ -117,4 +117,4 @@ I included a "nonce" parameter in the schema because I've had this issue where I
 
 There are four .json files in the knowledge section because when I removed them, the famous person filter kicked back in. So that's interesting. Before I did this server thing with the Actions and the cloudflare tunnel, I was manually uploading prompts in .json files to Knowledge and saving the GPT every time. That was really tedious and it even stopped working for me at some point which is what spurred me to do everything this way. Now changing the prompt is as simple as editing a text file in notepad.
 
-Note that this doesn't let you generate *every* famous person (I failed to do Obama and Trump -- it's understandable they'd be more protected by the filter). Even so I hope you can have some fun making pics this way while it's still unpatched.
+Note that this doesn't let you generate *every* famous person (I failed to do Obama and Trump -- it's understandable they'd be more protected by the filter). Even so I hope you can have some fun making pics this way, at least until some future update fucks it up.
